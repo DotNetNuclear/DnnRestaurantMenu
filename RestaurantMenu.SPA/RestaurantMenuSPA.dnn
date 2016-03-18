@@ -1,0 +1,106 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DotNetNuclear.RestaurantMenu.Spa" type="Module" version="01.00.00">
+      <friendlyName>Restaurant Menu (SPA)</friendlyName>
+      <description>DotNetNuclear RestaurantMenu SPA module example. This module provides users with the ability to create a dynamic restaurant menu.</description>
+      <iconFile>~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/images/extension.png</iconFile>
+      <owner>
+        <name>DotNetNuclear</name>
+        <organization>DotNetNuclear LLC</organization>
+        <url>http://www.dotnetnuclear.com/</url>
+        <email>support@dotnetnuclear.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+      </dependencies>
+      
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\DotNetNuclear\RestaurantMenuSPA</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>00.00.01</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>DotNetNuclear.RestaurantMenu.Spa</moduleName>
+            <foldername>DotNetNuclear/RestaurantMenuSPA</foldername>
+            <businessControllerClass>DotNetNuclear.Modules.RestaurantMenuSPA.Components.FeatureController</businessControllerClass>
+            <supportedFeatures />
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Restaurant Menu (SPA)</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/DotNetNuclear/RestaurantMenuSPA/View.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Edit</controlKey>
+                    <controlSrc>DesktopModules/DotNetNuclear/RestaurantMenuSPA/Edit.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Add/Edit Menu Item</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                    <supportsPopUps>False</supportsPopUps>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>QuickSettings</controlKey>
+                    <controlSrc>DesktopModules/DotNetNuclear/RestaurantMenuSPA/Settings.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Restaurant Menu Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/DotNetNuclear/RestaurantMenuSPA</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>DotNetNuclear.RestaurantMenu.Spa.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

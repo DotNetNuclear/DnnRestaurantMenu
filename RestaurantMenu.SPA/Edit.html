@@ -1,0 +1,99 @@
+﻿[JavaScript:{ jsname: "JQuery" }]
+[JavaScript:{ jsname: "Knockout" }]
+[JavaScript:{ path: "~/Resources/Shared/scripts/dnn.jquery.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/bootstrap/js/bootstrap.min.js", priority: 50}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/dropzone/js/dropzone.min.js", priority: 100}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/js/knockout.validation.min.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/js/common.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/js/menuEdit.js"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/bootstrap/css/bootstrap.min.css"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/dropzone/css/dropzone.css"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/module.css"}]
+
+<div class="menu-edit" id="editmenu-wrap-[ModuleContext:ModuleId]">
+    <fieldset>
+        <div class="form-group">
+            <label id="lblName" for="txtName">[Resx:{key:"lblName"}]</label>
+            <input id="txtName" type="text" class="form-control required" 
+                   title="[Resx:{key:'txtName.Help'}]" placeholder="[Resx:{key:'txtName.Help'}]"
+                   data-bind="value: name, css:{'has-error':showerror(name)}"/>
+        </div>
+        <div class="form-group">
+            <img id="imgItem" data-bind="attr: {src: imageUrl}" class="menu-image" />
+            <a data-toggle="modal" data-target="#dropzonemodal" href="#dropzonemodal" class="btn btn-success upload-btn">
+                <span class="glyphicon glyphicon-upload"></span> [Resx:{key:"lblUploadBtn"}]
+            </a>
+        </div>
+        <div class="form-group">
+            <label id="lblPrice" for="txtPrice">[Resx:{key:"lblPrice"}]</label>
+            <input id="txtPrice" type="text" class="form-control" data-bind="value: price, css:{'has-error':showerror(price)}" style="max-width: 120px;" />
+        </div>
+        <div class="form-group">
+            <label id="lblDesc" for="txtDesc">[Resx:{key:"lblDesc"}]</label>
+            <textarea id="txtDesc" rows="5" cols="20" class="form-control" data-bind="textinput: description"></textarea>
+        </div>
+        <div class="form-group">
+            <label>[Resx:{key:"lblOtherOptions"}]</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="chkDailySpecial" data-bind="checked: isDailySpecial"/>[Resx:{key:"lblIsDailySpecial"}]
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="chkVegetarian" data-bind="checked: isVegetarian"/>[Resx:{key:"lblIsVegetarian"}]
+                </label>
+            </div>
+        </div>
+        <input type="hidden" id="ImageUrl" data-bind="value: imageUrl" />
+        <input type="hidden" id="MenuItemId" data-bind="value: id"/>
+        <ul class="dnnActions dnnClear">
+            <li>
+                <button type="submit" class="btn btn-primary" data-bind="click: save">[Resx:{key:"btnSubmit"}]</button>
+            </li>
+            <li>
+                <a id="cancelEdit" href="#" class="btn" data-bind="click: cancel">[Resx:{key:"btnCancel"}]</a>
+            </li>
+        </ul>
+    </fieldset>
+</div>
+
+
+<div class="modal modal-dialog fade" id="dropzonemodal" tabindex="-1" role="dialog" style="background-color: transparent; border: none; box-shadow: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">✕</button>
+            <p class="no-margin">You can upload only 1 image at a time</p>
+        </div>
+        <div class="modal-body">
+            <div id="dZUpload" class="uploadform dropzone no-margin dz-clickable">
+                <div class="dz-default dz-message"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default attachtopost" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal -->
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var bindContainer = "#editmenu-wrap-[ModuleContext:ModuleId]";
+        var options = {
+            moduleId: parseInt("[ModuleContext:ModuleId]"),
+            localResources: {
+                maxfilesMsg: '[Resx:{key:"maxfilesMsg"}]'
+            },
+            dropzoneElemId: 'dZUpload',
+            bindContainer: bindContainer,
+            defaultImage: "/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/images/noimage.png"
+        };
+
+        var viewmodel = new dotnetnuclear.itemViewModel(options);
+        viewmodel.init();
+
+        ko.applyBindings(viewmodel, $(bindContainer)[0]);
+    });
+</script>

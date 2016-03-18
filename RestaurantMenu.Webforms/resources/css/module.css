@@ -1,0 +1,62 @@
+#pnl_restarauntmenu_items
+{
+}
+.menu-item
+{
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #808080;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+}
+.menu-item::after  
+{
+    clear:left;
+    content:'.';
+}
+.item-imagearea
+{
+    float: left;
+    width: 240px;
+}
+.item-content
+{
+    float: left;
+    width: 560px;
+}
+.item-name
+{
+    display: block;
+    padding: 8px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+.item-desc
+{
+    display: block;
+}
+.item-price
+{
+    display: block;
+    padding-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    color: #1f551b;
+}
+.itemimages-feature
+{
+    margin-top: 8px;
+    text-align: center;
+    width: 225px;
+}
+.itemimages-feature img
+{
+    width: 42px; height: 42px;
+    margin: 0 20px;
+}
+.dnnFilePicker div {
+    clear: both;
+    display: block;
+    height: auto;
+}

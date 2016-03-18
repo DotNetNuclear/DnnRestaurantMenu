@@ -1,0 +1,7 @@
+.result-list { margin-bottom: 20px;}
+.item-price {font-size: 1.6em; color: #173d50; line-height: 1.3em;}
+.item-flags {}
+.item-flags img { display: inline-block;}
+.menu-edit { padding: 20px; }    
+.upload-btn {cursor: pointer; margin: 10px 0;}
+.menu-image { margin-right: 10px; max-height: 250px; }

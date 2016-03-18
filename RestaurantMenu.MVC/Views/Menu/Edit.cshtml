@@ -1,0 +1,104 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<DotNetNuclear.Modules.RestaurantMenuMVC.Models.MenuItem>
+
+@using DotNetNuke.Web.Client.ClientResourceManagement
+@using DotNetNuke.Web.Mvc.Helpers
+
+@{
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/bootstrap/css/bootstrap.min.css");
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/bootstrap/js/bootstrap.min.js", 50);
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/dropzone/css/dropzone.css");
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/dropzone/js/dropzone.min.js", 100);
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/module.css");
+}
+
+<div class="menu-edit" id="editmenu-@Dnn.ModuleContext.ModuleId"> 
+    <fieldset>
+        <div class="form-group">
+            <label for="Name">@Dnn.LocalizeString("lblName")</label>
+            @Html.TextBoxFor(m => m.Name, new {@class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "dnnFormMessage dnnFormError", @style = "display: inline" })
+        </div>
+        <div class="form-group">
+            <img id="imgItem" src="@Model.ImageUrl" class="menu-image" />
+            <a data-toggle="modal" data-target="#dropzonemodal" href="#dropzonemodal" class="btn btn-success upload-btn"><span class="glyphicon glyphicon-upload"></span> Upload Image</a>
+        </div>
+        <div class="form-group">
+            <label for="Price">@Dnn.LocalizeString("lblPrice")</label>
+            @Html.TextBoxFor(m => m.Price, "{0:n2}", new { @class = "form-control", @style = "max-width: 120px;" })
+            @Html.ValidationMessageFor(m => m.Price, String.Empty, new { @class = "dnnFormMessage dnnFormError", @style = "display: inline" })
+        </div>
+        <div class="form-group">
+            <label for="Desc">@Dnn.LocalizeString("lblDescription")</label>
+            @Html.TextAreaFor(m => m.Desc, 5, 20, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>@Dnn.LocalizeString("lblOtherOptions")</label>
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.IsDailySpecial) @Dnn.LocalizeString("lblIsDailySpecial")
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.IsVegetarian) @Dnn.LocalizeString("lblIsVegetarian")
+                </label>
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.ModuleId)
+        @Html.HiddenFor(m => m.MenuItemId)
+        @Html.HiddenFor(m => m.ImageUrl)
+        <ul class="dnnActions dnnClear">
+            <li>
+                <button type="submit" class="btn btn-primary">@Dnn.LocalizeString("Submit")</button>
+            </li>
+            <li>
+                <a id="cancelEdit" href="@Url.Action("Index", "Menu")" class="btn">@Dnn.LocalizeString("Cancel")</a>
+            </li>
+        </ul>
+    </fieldset>
+</div>
+
+<div class="modal modal-dialog fade" id="dropzonemodal" tabindex="-1" role="dialog" style="background-color: transparent; border: none; box-shadow: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">✕</button>
+            <p class="no-margin">You can upload only 1 image at a time</p>
+        </div>
+        <div class="modal-body">
+            <div id="dZUpload" class="uploadform dropzone no-margin dz-clickable">
+                <div class="dz-default dz-message"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default attachtopost" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropzone.autoDiscover = false; // keep this line if you have multiple dropzones in the same page
+        $("#dZUpload").dropzone({
+            acceptedFiles: "image/jpeg,image/png,image/gif",
+            url: '@Url.Action("Upload", "Menu")',
+            maxFiles: 1, // Number of files at a time
+            maxFilesize: 1, //in MB
+            addRemoveLinks: true,
+            maxfilesexceeded: function (file) {
+                alert('You have uploaded more than 1 Image. Only the first file will be uploaded!');
+            },
+            success: function (response) {
+                var dnnViewResp = response.xhr.responseText;
+                dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+                var x = JSON.parse(dnnViewResp);
+                $('#dropzonemodal').modal('hide'); // On successful upload hide the modal window
+                $('#imgItem').attr('src', x.img); // Set src for the image
+                $('#ImageUrl').val(x.img);
+                this.removeAllFiles(); // This removes all files after upload to reset dropzone for next upload
+                //console.log('Image -> ' + x.img);
+            }
+        });
+    });
+</script>

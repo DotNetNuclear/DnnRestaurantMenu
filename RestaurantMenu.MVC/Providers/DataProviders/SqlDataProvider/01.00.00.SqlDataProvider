@@ -1,0 +1,49 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item]') AND type in (N'U'))
+BEGIN
+	CREATE TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item](
+		[MenuItemId] [int] IDENTITY(1,1) NOT NULL,
+		[ModuleId] [int] NOT NULL,
+		[Name] [nvarchar](100) NOT NULL,
+		[Desc] [nvarchar](1000) NULL,
+		[ImageUrl] [nvarchar](2000) NULL,
+		[IsDailySpecial] [bit] NOT NULL,
+		[IsVegetarian] [bit] NOT NULL,
+		[Price] [smallmoney] NULL,
+		[DisplayOrder] [int] NOT NULL,
+		[AddedByUserId] [int] NULL,
+		[DateAdded] [datetime] NOT NULL,
+		[ModifiedByUserId] [int] NULL,
+		[DateModified] [datetime] NOT NULL,
+	  CONSTRAINT [PK_DotNetNuclear_RestaurantMenuMVC_Item] PRIMARY KEY CLUSTERED 
+		(
+			[MenuItemId] ASC
+		)
+	) 
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item] ADD  CONSTRAINT [DF_DotNetNuclear_RestaurantMenuMVC_Item_IsDailySpecial]  DEFAULT ((0)) FOR [IsDailySpecial]
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item] ADD  CONSTRAINT [DF_DotNetNuclear_RestaurantMenuMVC_Item_IsVeggie]  DEFAULT ((0)) FOR [IsVegetarian]
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item] ADD  CONSTRAINT [DF_DotNetNuclear_RestaurantMenuMVC_Item_DisplayOrder]  DEFAULT ((0)) FOR [DisplayOrder]
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item] ADD  CONSTRAINT [DF_DotNetNuclear_RestaurantMenuMVC_Item_DateAdded]  DEFAULT (getdate()) FOR [DateAdded]
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}DotNetNuclear_RestaurantMenuMVC_Item] ADD  CONSTRAINT [DF_DotNetNuclear_RestaurantMenuMVC_Item_DateModified]  DEFAULT (getdate()) FOR [DateModified]
+
+END
+GO
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/

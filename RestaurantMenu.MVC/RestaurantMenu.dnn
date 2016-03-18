@@ -1,0 +1,104 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DotNetNuclear.RestaurantMenu.Mvc" type="Module" version="01.00.00">
+      <friendlyName>Restaurant Menu (MVC)</friendlyName>
+      <description>DotNetNuclear RestaurantMenu MVC module example. This module provides users with the ability to create a dynamic restaurant menu.</description>
+      <iconFile>~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/images/extension.png</iconFile>
+      <owner>
+        <name>DotNetNuclear</name>
+        <organization>DotNetNuclear LLC</organization>
+        <url>http://www.dotnetnuclear.com</url>
+        <email>support@dotnetnuclear.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+      </dependencies>
+      <components>
+
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\MVC\DotNetNuclear\RestaurantMenu</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>00.00.01</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>DotNetNuclear.RestaurantMenu.Spa</moduleName>
+            <foldername>DotNetNuclear/RestaurantMenu</foldername>
+            <businessControllerClass>DotNetNuclear.Modules.RestaurantMenuMVC.Components.FeatureController</businessControllerClass>
+            <supportedFeatures />
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Restaurant Menu (MVC)</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DotNetNuclear.Modules.RestaurantMenuMVC.Controllers/Menu/Index.mvc</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Edit</controlKey>
+                    <controlSrc>DotNetNuclear.Modules.RestaurantMenuMVC.Controllers/Menu/Edit.mvc</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Edit Content</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                    <supportsPopUps>False</supportsPopUps>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Settings</controlKey>
+                    <controlSrc>DotNetNuclear.Modules.RestaurantMenuMVC.Controllers/Settings/Settings.mvc</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>RestaurantMenu Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/MVC/DotNetNuclear/RestaurantMenu</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>DotNetNuclear.RestaurantMenu.Mvc.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

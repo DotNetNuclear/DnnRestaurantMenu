@@ -1,0 +1,96 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<DotNetNuclear.Modules.RestaurantMenuMVC.Models.MenuItem>>
+
+@using DotNetNuke.Web.Client.ClientResourceManagement
+@using DotNetNuke.Web.Mvc.Helpers
+
+@{
+    var moduleId = Dnn.ModuleContext.ModuleId;
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/bootstrap/css/bootstrap.min.css");
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/bootstrap/js/bootstrap.min.js", 20);
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/module.css");
+}
+
+
+<div id="menuitems-wrap-@moduleId" class="container">
+    @if (Model == null || !Model.Any())
+    {
+        <div id="noresults-@moduleId" class="dnnFormMessage dnnFormInfo">
+            <span>@Dnn.LocalizeString("NoItemsDefined")</span>
+        </div>
+    }
+    else
+    {
+        <div class="row resultset">
+        @foreach (var item in Model)
+        {
+            <div class="result-list col-xs-12">
+                <div class="col-sm-3">
+                    <div class="result-image">
+                        <img src="@item.ImageUrl" title="@item.Name" alt="@item.Name"/>
+                    </div>
+                    @{
+                        if (Dnn.ModuleContext.IsEditable)
+                        {
+                            <div class="row popover-markup" style="display: inline;">
+                                <a href="javascript:void(0)" class="trigger btn btn-sm btn-default">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <div class="head hide">Edit Item</div>
+                                <div class="content hide">
+                                    <div class="popoverContentContainer">
+                                        <div id="optionMenu">
+                                            <a class="btn btn-default" href="@Url.Action("Edit", "Menu", new {ctl = "Edit", itemId = item.MenuItemId})">@Dnn.LocalizeString("EditItem")</a>
+                                            <a class="btn btn-default btn-delete" href="@Url.Action("Delete", "Menu", new {itemId = item.MenuItemId})">@Dnn.LocalizeString("DeleteItem")</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="col-sm-9">
+                    <div class="result-content">
+                        <h3>@item.Name</h3>
+                        <div class="result-content-Info">
+                            @item.Desc
+                        </div>
+                        <div class="item-price">@item.Price.ToString("c", ViewBag.Culture)</div>
+                        <div class="item-flags">
+                            @if (item.IsDailySpecial)
+                            {
+                                <img src="/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/images/recommended.gif" title="Special" />
+                            }
+                            @if (item.IsVegetarian)
+                            {
+                                <img src="/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/images/nomeat.gif" title="Vegetarian" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            }
+        </div>
+        }
+</div>
+
+<script type="text/javascript">
+    $(document).on("click", ".btn-delete", function () {
+        return confirm('@Dnn.LocalizeString("DeleteConfirm")');
+    });
+
+    $(document).ready(function () {
+        $('.popover-markup > .trigger').popover({
+            html: true,
+            placement: "bottom",
+            title: function () {
+                return $(this).parent().find('.head').html();
+            },
+            content: function () {
+                return $(this).parent().find('.content').html();
+            },
+            template: '<div class="popover dashboardPopover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"></div></div></div>'
+        });
+    });
+</script>

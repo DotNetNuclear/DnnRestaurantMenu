@@ -1,0 +1,75 @@
+﻿[JavaScript:{ jsname: "JQuery" }]
+[JavaScript:{ jsname: "Knockout" }]
+[JavaScript:{ path: "~/Resources/Shared/scripts/dnn.jquery.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/js/common.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/js/menuView.js"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/bootstrap/css/bootstrap.min.css"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/module.css"}]
+
+[ModuleAction:{controlKey : "Edit", securityAccessLevel : "Edit",  titleKey: "EditModule", localResourceFile: "~/DesktopModules/DotNetNuclear/RestaurantMenuSPA/App_LocalResources/View.resx" }]
+
+<div id="menuitems-wrap-[ModuleContext:ModuleId]" class="container">
+    <div id="noresults-[ModuleContext:ModuleId]" class="dnnFormMessage dnnFormInfo" data-bind="visible: itemList().length <= 0">
+        <span>[Resx:{key:"NoItemsDefined"}]</span>
+    </div>
+    <div class="row resultset" data-bind="visible: itemList().length > 0">
+        <!-- ko foreach: {data: itemList}  -->
+        <div class="result-list col-xs-12">
+            <div class="col-sm-3">
+                <div class="result-image">
+                    <img data-bind="attr: {src: imageUrl, title: name, alt: name}"/>
+                </div>
+                <div class="row popover-markup" style="display: inline;" data-bind="visible: $parent.editMode(), attr: { 'data-editurl': id }"> 
+                    <a id="editMenu-[ModuleContext:ModuleId]" href="javascript:void(0);" class="trigger btn btn-sm btn-default" data-bind="popover: {content: '#edit-template', id: id()}">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <div class="head hide">[Resx:{key:"EditItemMenuHdr"}]</div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="result-content">
+                    <h3 data-bind="text: name"></h3>
+                    <div class="result-content-Info" data-bind="text: description"></div>
+                    <div class="item-price" data-bind="text: price"></div>
+                    <div class="item-flags">
+                        <img data-bind="visible: isDailySpecial" src="/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/images/recommended.gif" title="Special" />
+                        <img data-bind="visible: isVegetarian" src="/DesktopModules/DotNetNuclear/RestaurantMenuSPA/Resources/images/nomeat.gif" title="Vegetarian" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<script type="html/text" id="edit-template">
+    <div class="arrow"></div>
+    <div class="popover-inner">
+        <div class="popover-content">
+            <div class="popoverContentContainer">
+                <div id="optionMenu">
+                    <a class="btn btn-default" data-bind="attr: { href: selectedItem().editUrl }">[Resx:{key:"EditItem"}]</a>
+                    <a class="btn btn-default btn-delete" data-bind="click: $root.deleteItem" href="javascript:void(0)">[Resx:{key:"DeleteItem"}]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script language="javascript" type="text/javascript">
+    jQuery(function ($) {
+        var bindContainer = "#menuitems-wrap-[ModuleContext:ModuleId]";
+        var options = {
+            moduleId: parseInt("[ModuleContext:ModuleId]"),
+            localResources: { deleteConfirm: '[Resx:{key:"DeleteConfirm"}]' },
+            editable: Boolean("[ModuleContext:IsEditable]"),
+            bindContainer: bindContainer
+        };
+
+        var viewmodel = new dotnetnuclear.itemListViewModel(options);
+        viewmodel.init();
+
+        ko.applyBindings(viewmodel, $(bindContainer)[0]);
+    });
+</script>

@@ -1,0 +1,18 @@
+﻿@model DotNetNuclear.Modules.RestaurantMenuMVC.Models.Settings
+
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using DotNetNuke.Web.Mvc.Helpers
+
+<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded">@Dnn.LocalizeString("BasicSettings")</a></h2>
+<fieldset>
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.LabelFor(m => Model.CurrencyCulture, Dnn.LocalizeString("lblCurrencyCulture"), new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.DropDownListFor(m => Model.CurrencyCulture, 
+            new SelectList(Model.CurrencyCultureOptions, "Code", "Name", Model.CurrencyCultureOptions.First()))
+    </div>
+
+</fieldset>
+

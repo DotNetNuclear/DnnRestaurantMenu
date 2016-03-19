@@ -14,6 +14,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Web.Mvc;
+using DotNetNuke.Instrumentation;
 using DotNetNuke.Web.Mvc.Framework.Controllers;
 using DotNetNuke.Web.Mvc.Framework.ActionFilters;
 using DotNetNuclear.Modules.RestaurantMenuMVC.Components;
@@ -28,6 +29,12 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Controllers
         private const string DATALAYER_NAME = "DAL2";
         private IMenuItemRepository _menuController;
         private int _moduleId = 0;
+        private ILog _log;
+
+        protected ILog Log
+        {
+            get { return _log ?? (_log = LoggerSource.Instance.GetLogger(this.GetType())); }
+        }
 
         public int CurrentModuleId
         {
@@ -100,20 +107,27 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Controllers
         public ActionResult Edit(int itemId = -1)
         {
             IMenuItem item = FeatureController.DataModelFactory(DATALAYER_NAME);
-            item.ModuleId = CurrentModuleId;
-
-            if (itemId > 0)
+            try
             {
-                item =_menuController.GetItem(itemId, CurrentModuleId);
-            }
+                item.ModuleId = CurrentModuleId;
 
-            if (String.IsNullOrEmpty(item.ImageUrl))
-            {
-                try
+                if (itemId > 0)
                 {
-                    item.ImageUrl = FeatureController.BASEMODULEPATH + "/Resources/images/noimage.png";
+                    item = _menuController.GetItem(itemId, CurrentModuleId);
                 }
-                catch { }
+
+                if (String.IsNullOrEmpty(item.ImageUrl))
+                {
+                    try
+                    {
+                        item.ImageUrl = FeatureController.BASEMODULEPATH + "/Resources/images/noimage.png";
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("An error occurred in the Edit Action. Exception: {0}", ex);
             }
 
             return View(item);
@@ -125,30 +139,36 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (item.MenuItemId <= 0)
+                try
                 {
-                    item.AddedByUserId = User.UserID;
-                    item.DateAdded = DateTime.UtcNow;
-                    item.ModifiedByUserId = User.UserID;
-                    item.DateModified = DateTime.UtcNow;
+                    if (item.MenuItemId <= 0)
+                    {
+                        item.AddedByUserId = User.UserID;
+                        item.DateAdded = DateTime.UtcNow;
+                        item.ModifiedByUserId = User.UserID;
+                        item.DateModified = DateTime.UtcNow;
 
-                    _menuController.CreateItem(item);
+                        _menuController.CreateItem(item);
+                    }
+                    else
+                    {
+                        var existingItem = _menuController.GetItem(item.MenuItemId, item.ModuleId);
+                        existingItem.ModifiedByUserId = User.UserID;
+                        existingItem.IsDailySpecial = item.IsDailySpecial;
+                        existingItem.IsVegetarian = item.IsVegetarian;
+                        existingItem.ImageUrl = item.ImageUrl;
+                        existingItem.Price = item.Price;
+                        existingItem.Name = item.Name;
+                        existingItem.Desc = item.Desc;
+                        existingItem.AddedByUserId = item.AddedByUserId;
+
+                        _menuController.UpdateItem(existingItem);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    var existingItem = _menuController.GetItem(item.MenuItemId, item.ModuleId);
-                    existingItem.ModifiedByUserId = User.UserID;
-                    existingItem.IsDailySpecial = item.IsDailySpecial;
-                    existingItem.IsVegetarian = item.IsVegetarian;
-                    existingItem.ImageUrl = item.ImageUrl;
-                    existingItem.Price = item.Price;
-                    existingItem.Name = item.Name;
-                    existingItem.Desc = item.Desc;
-                    existingItem.AddedByUserId = item.AddedByUserId;
-
-                    _menuController.UpdateItem(existingItem);
+                    Log.ErrorFormat("An error occurred in saving the menu item. Exception: {0}", ex);
                 }
-
                 return RedirectToDefaultRoute();
             }
 

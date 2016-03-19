@@ -11,6 +11,7 @@
 */
 using System;
 using System.Web.Caching;
+using System.ComponentModel.DataAnnotations;
 using DotNetNuke.ComponentModel.DataAnnotations;
 
 namespace DotNetNuclear.Modules.RestaurantMenuMVC.Models
@@ -28,6 +29,7 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Models
 
         public int ModuleId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public string Desc { get; set; }
@@ -38,6 +40,7 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Models
 
         public bool IsVegetarian { get; set; }
 
+        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
         public int DisplayOrder { get; set; }

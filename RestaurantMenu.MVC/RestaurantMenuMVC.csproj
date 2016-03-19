@@ -46,6 +46,10 @@
       <HintPath>packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DotNetNuke.Instrumentation, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\DotNetNuke.Instrumentation.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetNuke.Web, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.Web.dll</HintPath>
       <Private>True</Private>

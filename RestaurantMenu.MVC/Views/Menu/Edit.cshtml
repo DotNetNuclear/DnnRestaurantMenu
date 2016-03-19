@@ -11,21 +11,21 @@
     ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "~/DesktopModules/MVC/DotNetNuclear/RestaurantMenu/Resources/module.css");
 }
 
-<div class="menu-edit" id="editmenu-@Dnn.ModuleContext.ModuleId"> 
+<div class="menu-edit" id="editmenu-@Dnn.ModuleContext.ModuleId" role="form"> 
     <fieldset>
-        <div class="form-group">
+        <div class="form-group @(Html.ViewData.ModelState.IsValidField("Name") ? null : "has-error" )">
             <label for="Name">@Dnn.LocalizeString("lblName")</label>
             @Html.TextBoxFor(m => m.Name, new {@class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "dnnFormMessage dnnFormError", @style = "display: inline" })
+            @Html.ValidationMessageFor(m => m.Name, String.Empty, new { @class = "text-danger field-validation-error" })
         </div>
         <div class="form-group">
             <img id="imgItem" src="@Model.ImageUrl" class="menu-image" />
             <a data-toggle="modal" data-target="#dropzonemodal" href="#dropzonemodal" class="btn btn-success upload-btn"><span class="glyphicon glyphicon-upload"></span> Upload Image</a>
         </div>
-        <div class="form-group">
+        <div class="form-group @(Html.ViewData.ModelState.IsValidField("Price") ? null : "has-error" )">
             <label for="Price">@Dnn.LocalizeString("lblPrice")</label>
             @Html.TextBoxFor(m => m.Price, "{0:n2}", new { @class = "form-control", @style = "max-width: 120px;" })
-            @Html.ValidationMessageFor(m => m.Price, String.Empty, new { @class = "dnnFormMessage dnnFormError", @style = "display: inline" })
+            @Html.ValidationMessageFor(m => m.Price, String.Empty, new { @class = "text-danger field-validation-error" })
         </div>
         <div class="form-group">
             <label for="Desc">@Dnn.LocalizeString("lblDescription")</label>

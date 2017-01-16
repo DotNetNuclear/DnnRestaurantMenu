@@ -1,0 +1,132 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="DotNetNuclear.RestaurantMenu.Pb" type="Module" version="01.00.00">
+      <friendlyName>Restaurant Menu (Pb)</friendlyName>
+      <description>DotNetNuclear RestaurantMenu Persona Bar module example. This module provides users with the ability to create a dynamic restaurant menu.</description>
+      <iconFile>~/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/images/extension.png</iconFile>
+      <owner>
+        <name>DotNetNuclear</name>
+        <organization>DotNetNuclear LLC</organization>
+        <url>http://www.dotnetnuclear.com/</url>
+        <email>support@dotnetnuclear.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+        <dependency type="ManagedPackage" version="01.00.00">Dnn.PersonaBar.UI</dependency>
+      </dependencies>
+      
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\DotNetNuclear\RestaurantMenuPB</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>00.00.01</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>DotNetNuclear.RestaurantMenu.PersonaBar</moduleName>
+            <foldername>DotNetNuclear/RestaurantMenuPB</foldername>
+            <businessControllerClass>DotNetNuclear.RestaurantMenu.PersonaBar.Components.FeatureController</businessControllerClass>
+            <supportedFeatures />
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Restaurant Menu (PersonaBar)</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/DotNetNuclear/RestaurantMenuPB/View.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>QuickSettings</controlKey>
+                    <controlSrc>DesktopModules/DotNetNuclear/RestaurantMenuPB/Settings.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Restaurant Menu Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/DotNetNuclear/RestaurantMenuPB</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>DotNetNuclear.RestaurantMenu.PersonaBar.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+
+      </components>
+    </package>
+
+    <package name="DotNetNuclear.RestaurantMenu.PersonaBar" type="PersonaBar" version="01.00.00">
+      <friendlyName>DotNetNuclear.PersonaBar.RestaurantMenu</friendlyName>
+      <description>DotNetNuclear RestaurantMenu Persona Bar administrator and module example.</description>
+      <iconFile>~/Images/icon-personabarapp-32px.png</iconFile>
+      <owner>
+        <name>DotNetNuclear</name>
+        <organization>DotNetNuclear LLC</organization>
+        <url>http://www.dotnetnuclear.com/</url>
+        <email>support@dotnetnuclear.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+        <dependency type="ManagedPackage" version="01.00.00">Dnn.PersonaBar.UI</dependency>
+      </dependencies>
+      <components>
+
+        <component type="PersonaBarMenu">
+          <menu>
+            <identifier>DotNetNuclear.RestaurantMenu</identifier>
+            <moduleName>RestaurantMenu</moduleName>
+            <controller>DotNetNuclear.RestaurantMenu.PersonaBar.MenuControllers.AdminMenuController, DotNetNuclear.RestaurantMenu.PersonaBar</controller>
+            <resourceKey>nav_RestaurantMenu</resourceKey>
+            <path>RestaurantMenu</path>
+            <mobileSupport>true</mobileSupport>
+            <parent>Content</parent>
+            <order>2</order>
+          </menu>
+        </component>
+
+      </components>
+    </package>
+    
+  </packages>
+</dotnetnuke>

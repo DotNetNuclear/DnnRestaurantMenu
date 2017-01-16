@@ -1,0 +1,51 @@
+﻿[JavaScript:{ jsname: "JQuery" }]
+[JavaScript:{ jsname: "Knockout" }]
+[JavaScript:{ path: "~/Resources/Shared/scripts/dnn.jquery.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/js/common.js"}]
+[JavaScript:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/js/menuView.js"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/bootstrap/css/bootstrap.min.css"}]
+[CSS:{ path: "~/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/module.css"}]
+
+<div id="menuitems-wrap-[ModuleContext:ModuleId]" class="container">
+    <div id="noresults-[ModuleContext:ModuleId]" class="dnnFormMessage dnnFormInfo" data-bind="visible: itemList().length <= 0">
+        <span>[Resx:{key:"NoItemsDefined"}]</span>
+    </div>
+    <div class="row resultset" data-bind="visible: itemList().length > 0">
+        <!-- ko foreach: {data: itemList}  -->
+        <div class="result-list col-xs-12">
+            <div class="col-sm-3">
+                <div class="result-image">
+                    <img data-bind="attr: {src: imageUrl, title: name, alt: name}"/>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="result-content">
+                    <h3 data-bind="text: name"></h3>
+                    <div class="result-content-Info" data-bind="text: description"></div>
+                    <div class="item-price" data-bind="text: price"></div>
+                    <div class="item-flags">
+                        <img data-bind="visible: isDailySpecial" src="/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/images/recommended.gif" title="Special" />
+                        <img data-bind="visible: isVegetarian" src="/DesktopModules/DotNetNuclear/RestaurantMenuPB/Resources/images/nomeat.gif" title="Vegetarian" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    jQuery(function ($) {
+        var bindContainer = "#menuitems-wrap-[ModuleContext:ModuleId]";
+        var options = {
+            moduleId: parseInt("[ModuleContext:ModuleId]"),
+            localResources: { },
+            bindContainer: bindContainer
+        };
+
+        var viewmodel = new dotnetnuclear.itemListViewModel(options);
+        viewmodel.init();
+
+        ko.applyBindings(viewmodel, $(bindContainer)[0]);
+    });
+</script>

@@ -54,7 +54,6 @@ namespace DotNetNuclear.RestaurantMenu.PersonaBar.Services.Controllers
 
         [HttpGet]  //[baseURL]/Menu/list
         [ActionName("list")]
-        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Anonymous)]
         public HttpResponseMessage GetList()
         {
             int moduleId = 0;

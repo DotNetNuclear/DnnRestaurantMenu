@@ -14,7 +14,7 @@ class MenuService {
     getServiceFramework(controller) {
         let sf = util.sf;
 
-        sf.moduleRoot = "DotNetNuclear.RestaurantMenu.Pb";
+        sf.moduleRoot = "DotNetNuclear.RestaurantMenu.PersonaBar";
         sf.controller = controller;
 
         return sf;

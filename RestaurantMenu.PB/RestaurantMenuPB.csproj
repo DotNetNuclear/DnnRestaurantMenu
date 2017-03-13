@@ -26,13 +26,13 @@
     <OldToolsVersion>12.0</OldToolsVersion>
     <UseGlobalApplicationHostFile />
     <UpgradeBackupLocation />
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,7 +40,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -110,18 +110,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\personaBar\css\RestaurantMenu.css" />
-    <Content Include="admin\personaBar\RestaurantMenu.html" />
-    <Content Include="admin\personaBar\scripts\bundles\restaurantmenu-bundle.js" />
-    <Content Include="admin\personaBar\scripts\RestaurantMenu.js" />
+    <Content Include="PersonaBar\css\RestaurantMenu.css" />
+    <Content Include="PersonaBar\RestaurantMenu.html" />
+    <Content Include="PersonaBar\scripts\RestaurantMenu.js" />
     <Content Include="App_LocalResources\Settings.resx" />
     <Content Include="App_LocalResources\View.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildScripts\ModulePackage.targets" />
-    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
+    <Content Include="gruntfile.js" />
+    <Content Include="InstallScripts\01.00.00.SqlDataProvider" />
+    <Content Include="InstallScripts\Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\images\extension.png" />
@@ -208,7 +206,7 @@
     <Content Include="RestaurantMenu.Web\src\utils\index.jsx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\personaBar\App_LocalResources\RestaurantMenu.resx">
+    <Content Include="PersonaBar\App_LocalResources\RestaurantMenu.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -223,6 +221,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PersonaBar\scripts\bundles\" />
     <Folder Include="RestaurantMenu.Web\src\components\topPane\" />
   </ItemGroup>
   <ItemGroup>
@@ -262,8 +261,5 @@
     <PackageName>RestaurantMenuPB</PackageName>
     <MSBuildCommunityTasksPath>$(SolutionDir)\packages\MSBuildTasks.1.4.0.128\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
-  <Import Project="BuildScripts\ModulePackage.Targets" />
-  <Target Name="AfterBuild" DependsOnTargets="PackageModule">
-  </Target>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v14.0\WebApplications\Microsoft.WebApplication.targets" />
 </Project>

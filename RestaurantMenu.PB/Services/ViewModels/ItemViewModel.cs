@@ -21,7 +21,6 @@ namespace DotNetNuclear.RestaurantMenu.PersonaBar.Services.ViewModels
     [JsonObject(MemberSerialization.OptIn)]
     public class ItemViewModel
     {
-        private string _imageFolder;
 
         public ItemViewModel(MenuItem t, string cultureCode, IFileInfo missingImageFile)
         {

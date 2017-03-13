@@ -1,4 +1,7 @@
-﻿const webpack = require("webpack");
+﻿var moduleCompanyName = "dotnetnuclear"; 
+var moduleProjName = "restaurantmenu"; 
+
+const webpack = require("webpack");
 const packageJson = require("./package.json");
 const isProduction = process.env.NODE_ENV === "production";
 const path = require("path");
@@ -15,10 +18,10 @@ const languages = {
 const webpackExternals = require("dnn-webpack-externals");
 
 module.exports = {
-    entry: "./restaurantmenu.web/src/main.jsx",
+    entry: "./" + moduleProjName + ".web/src/main.jsx",
     output: {
-        path: "../../admin/dnn.personaBar/modules/dotnetnuclear.restaurantmenu/scripts/bundles/",
-        filename: "restaurantmenu-bundle.js",
+        path: "./PersonaBar/scripts/bundles/",
+        filename: moduleProjName + "-bundle.js",
         publicPath: isProduction ? "" : "http://localhost:8080/dist/"
     },
 
@@ -37,8 +40,8 @@ module.exports = {
     resolve: {
         extensions: ["", ".js", ".json", ".jsx"],
         root: [
-            path.resolve('./RestaurantMenu.Web/src'), // Look in src first
-            path.resolve('./node_modules')  // Last fallback to node_modules
+            path.resolve("./" + moduleProjName + ".web/src"), // Look in src first
+            path.resolve("./node_modules")  // Last fallback to node_modules
         ]
     },
 	

@@ -17,8 +17,11 @@ module.exports = function (grunt) {
 				src: ['packaging/']
 			},
 			install: {
-				src: ['packaging/module/']
-			}
+                src: ['packaging/module/']
+			},
+			installPB: {
+                src: ['packaging/personabar/']
+            }
         },
 		compress: {
 			install: {
@@ -32,13 +35,22 @@ module.exports = function (grunt) {
 			},
 			installResources: {
 				options: {
-					archive: 'packaging/Resources.zip',
+					archive: 'packaging/ResourcesModule.zip',
 					mode: 'zip'
 				},
 				files: [
 					{ expand: true, cwd: 'packaging/module/', src: ['**'] }
 				]
-			}
+			},
+			installPBResources: {
+                options: {
+                    archive: 'packaging/ResourcesPB.zip',
+                    mode: 'zip'
+                },
+                files: [
+                    { expand: true, cwd: 'packaging/personabar/', src: ['**'] }
+                ]
+            }
 		},
 		copy: {
             assemblies: {
@@ -50,8 +62,9 @@ module.exports = function (grunt) {
 				files: [
 					{ expand: true, src: ['*.dnn', '*.txt', '*.html'], dest: 'packaging/' },
 					{ expand: true, src: ['InstallScripts/*.SqlDataProvider'], dest: 'packaging/' },
-                    { expand: true, cwd: 'bin/', src: ['<%= global.packageName %>.*.dll'], dest: 'packaging/bin/' },
+                    { expand: true, cwd: 'bin/', src: ['<%= global.packageName %>.dll'], dest: 'packaging/bin/' },
 					{ expand: true, src: ['Resources/**'], dest: 'packaging/module/' },
+                    { expand: true, cwd: 'PersonaBar/', src: ['**/*', '!**/*.js.map'], dest: 'packaging/personabar/' }
 				]
 			},
             pb: {
@@ -100,6 +113,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-msbuild');
 
-    grunt.registerTask('package', ['msbuild:release', 'copy:install', 'compress:installResources', 'clean:install', 'compress:install', 'clean:packagingTemp']);
-    grunt.registerTask('debug', ['msbuild:debug', 'copy:debug', 'copy:pb']);
+    grunt.registerTask('package', ['msbuild:release', 'copy:install', 'copy:pb', 'compress:installResources', 'compress:installPBResources', 'clean:install', 'clean:installPB', 'compress:install', 'clean:packagingTemp']);
+    grunt.registerTask('debug', ['msbuild:debug', 'copy:assemblies', 'copy:pb']);
 };

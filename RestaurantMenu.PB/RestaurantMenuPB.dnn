@@ -23,12 +23,12 @@
           <scripts>
             <basePath>DesktopModules\DotNetNuclear\RestaurantMenuPB</basePath>
             <script type="Install">
-              <path>Providers\DataProviders\SqlDataProvider</path>
+              <path>InstallScripts</path>
               <name>01.00.00.SqlDataProvider</name>
               <version>01.00.00</version>
             </script>
             <script type="UnInstall">
-              <path>Providers\DataProviders\SqlDataProvider</path>
+              <path>InstallScripts</path>
               <name>Uninstall.SqlDataProvider</name>
               <version>00.00.01</version>
             </script>
@@ -76,7 +76,7 @@
           <resourceFiles>
             <basePath>DesktopModules/DotNetNuclear/RestaurantMenuPB</basePath>
             <resourceFile>
-              <name>Resources.zip</name>
+              <name>ResourcesModule.zip</name>
             </resourceFile>
           </resourceFiles>
         </component>
@@ -125,6 +125,15 @@
           </menu>
         </component>
 
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/Admin/Dnn.PersonaBar/Modules/DotNetNuclear.RestaurantMenu</basePath>
+            <resourceFile>
+              <name>ResourcesPB.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        
       </components>
     </package>
     

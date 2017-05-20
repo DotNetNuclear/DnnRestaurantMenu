@@ -60,10 +60,12 @@ module.exports = function (grunt) {
 			},
 			install: {
 				files: [
-					{ expand: true, src: ['*.dnn', '*.txt', '*.html'], dest: 'packaging/' },
+					{ expand: true, src: ['*.dnn', '*.txt'], dest: 'packaging/' },
 					{ expand: true, src: ['InstallScripts/*.SqlDataProvider'], dest: 'packaging/' },
                     { expand: true, cwd: 'bin/', src: ['<%= global.packageName %>.dll'], dest: 'packaging/bin/' },
-					{ expand: true, src: ['Resources/**'], dest: 'packaging/module/' },
+                    { expand: true, src: ['*.html'], dest: 'packaging/module/' },
+                    { expand: true, src: ['App_LocalResources/**'], dest: 'packaging/module/' },
+                    { expand: true, src: ['Resources/**', '!**/*.js.map'], dest: 'packaging/module/' },
                     { expand: true, cwd: 'PersonaBar/', src: ['**/*', '!**/*.js.map'], dest: 'packaging/personabar/' }
 				]
 			},

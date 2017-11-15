@@ -10,11 +10,13 @@
 ' 
 */
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net;
 using System.Web.Http;
 using DotNetNuke.Web.Api;
+using DotNetNuke.Services.FileSystem;
 
 namespace DotNetNuclear.Modules.RestaurantMenuSPA.Services.Controllers
 {
@@ -29,22 +31,37 @@ namespace DotNetNuclear.Modules.RestaurantMenuSPA.Services.Controllers
         {
             string imageUrl = string.Empty;
 
-            string imgPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Portals/0/Restaurant/");
-            if (!Directory.Exists(imgPath))
+            try
             {
-                Directory.CreateDirectory(imgPath);
-            }
-
-            foreach (string s in System.Web.HttpContext.Current.Request.Files)
-            {
-                var file = System.Web.HttpContext.Current.Request.Files[s];
-                if (file.ContentLength > 0)
+                // Check if folder exists, otherwise create
+                var imgFolder = FolderManager.Instance.GetFolder(0, "/Restaurant");
+                if (imgFolder == null)
                 {
-                    string fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(imgPath, fileName);
-                    file.SaveAs(path);
-                    imageUrl = string.Format("/Portals/0/Restaurant/{0}", fileName);
+                    imgFolder = FolderManager.Instance.AddFolder(0, "/Restaurant");
                 }
+
+                // Loop thu all files in request (if there are more than 1)
+                foreach (string s in System.Web.HttpContext.Current.Request.Files)
+                {
+                    var file = System.Web.HttpContext.Current.Request.Files[s];
+                    if (file.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(file.FileName);
+                        // Check if file exists
+                        var uploadFile = FileManager.Instance.GetFile(imgFolder, fileName);
+                        if (uploadFile == null)
+                        {
+                            uploadFile = FileManager.Instance.AddFile(imgFolder, fileName, file.InputStream);
+                        }
+
+                        // Assign the url of the image file to output to be used in img src attribute
+                        imageUrl = FileManager.Instance.GetUrl(uploadFile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DotNetNuke.Services.Exceptions.Exceptions.LogException(ex);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, new { img = imageUrl, thumb = imageUrl });

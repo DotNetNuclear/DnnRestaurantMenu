@@ -35,7 +35,7 @@
 
         <component type="Module">
           <desktopModule>
-            <moduleName>DotNetNuclear.RestaurantMenu.Spa</moduleName>
+            <moduleName>DotNetNuclear.RestaurantMenu.Mvc</moduleName>
             <foldername>DotNetNuclear/RestaurantMenu</foldername>
             <businessControllerClass>DotNetNuclear.Modules.RestaurantMenuMVC.Components.FeatureController</businessControllerClass>
             <supportedFeatures />

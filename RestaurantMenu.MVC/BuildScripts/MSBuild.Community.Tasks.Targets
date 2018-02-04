@@ -48,6 +48,7 @@
       <SourceInclude Include="**\*.cs.designer" />
       <SourceInclude Include="**\*.csproj" />
       <SourceInclude Include="**\*.config" />
+      <SourceInclude Include="**\*.dnn" />
       <SourceInclude Include="**\*.targets" />
       <SourceInclude Include="**\*.sln" />
     </ItemGroup>

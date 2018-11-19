@@ -78,8 +78,8 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
+    Dropzone.autoDiscover = false; // keep this line if you have multiple dropzones in the same page
     $(document).ready(function () {
-        //Dropzone.autoDiscover = false; // keep this line if you have multiple dropzones in the same page
         $("#dZUpload").dropzone({
             acceptedFiles: "image/jpeg,image/png,image/gif",
             url: '@Url.Action("Upload", "Menu")',

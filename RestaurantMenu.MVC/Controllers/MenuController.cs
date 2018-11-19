@@ -101,7 +101,7 @@ namespace DotNetNuclear.Modules.RestaurantMenuMVC.Controllers
                 }
             }
 
-            return Json(new { img = imageUrl, thumb = imageUrl });
+            return Json(new { img = imageUrl, thumb = imageUrl }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int itemId = -1)

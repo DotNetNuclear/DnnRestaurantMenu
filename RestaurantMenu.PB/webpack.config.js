@@ -3,7 +3,7 @@ var moduleProjName = "restaurantmenu";
 
 const webpack = require("webpack");
 const packageJson = require("./package.json");
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV.trim() === "production";
 const path = require("path");
 const languages = {
     "en": null
